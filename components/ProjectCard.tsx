@@ -15,7 +15,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
   return (
     <Card
-      className="bg-black/30 border-white/20 text-white overflow-hidden group hover:bg-black/40 hover:border-white/40 hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm flex flex-col h-full animate-in fade-in-0 duration-500 hover:shadow-2xl hover:shadow-blue-500/10"
+      className="bg-black/30 border-white/20 text-white overflow-hidden group hover:bg-black/40 hover:border-white/40 hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm flex flex-col h-full min-h-[560px] sm:min-h-[600px] animate-in fade-in-0 duration-500 hover:shadow-2xl hover:shadow-blue-500/10"
       style={{ animationDelay: getProjectCardDelay(index) }}
     >
       {/* Project Image */}
@@ -42,7 +42,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       </div>
 
       {/* Project Header */}
-      <CardHeader className="flex-shrink-0 p-4 sm:p-6">
+      <CardHeader className="flex-shrink-0 px-4 pt-4 pb-2 sm:px-5 sm:pt-5 sm:pb-2">
         <div className="flex justify-between items-start mb-2">
           <CardTitle className="text-lg sm:text-xl flex-1">
             {project.title}
@@ -53,7 +53,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             </Badge>
           )}
         </div>
-        <p className="text-gray-300 text-sm line-clamp-3 mb-3">
+        <p className="text-gray-300 text-sm line-clamp-2 mb-2">
           {project.description}
         </p>
         {project.metrics && (
@@ -62,7 +62,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       </CardHeader>
 
       {/* Project Content */}
-      <CardContent className="flex-1 flex flex-col justify-between space-y-3 sm:space-y-4 p-4 sm:p-6 w-full overflow-hidden">
+      <CardContent className="flex-1 flex flex-col space-y-3 sm:space-y-4 px-4 py-4 sm:px-5 sm:py-5 w-full overflow-hidden">
         <div className="space-y-3 sm:space-y-4">
           {/* Technologies */}
           <div>
@@ -119,15 +119,20 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               Key Features
             </h4>
             <ul className="text-xs text-gray-400 space-y-1">
-              {project.features.map((feature, featureIndex) => (
+              {project.features.slice(0, 5).map((feature, featureIndex) => (
                 <li key={featureIndex}>• {feature}</li>
               ))}
             </ul>
+            {project.features.length > 5 && (
+              <div className="text-[11px] text-gray-500 mt-1">
+                +{project.features.length - 5} more
+              </div>
+            )}
           </div>
         </div>
 
         {/* Links - Fixed at bottom */}
-        <div className="flex gap-2 pt-4 mt-auto">
+        <div className="flex gap-2 pt-3 mt-2">
           <Button
             size="sm"
             variant="outline"

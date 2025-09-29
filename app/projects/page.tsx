@@ -118,12 +118,13 @@ export default function ProjectsPage() {
             <StaggeredAnimation
               staggerDelay={50}
               initialDelay={0}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full items-stretch"
             >
               {filteredProjects.map((project, index) => (
                 <MagneticHover
                   key={`${project.title}-${index}`}
                   strength={0.03}
+                  className="h-full"
                 >
                   <ProjectCard project={project} index={index} />
                 </MagneticHover>

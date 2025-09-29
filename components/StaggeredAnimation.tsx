@@ -46,6 +46,7 @@ export default function StaggeredAnimation({
     <div ref={containerRef} className={className}>
       {children.map((child, index) => (
         <div
+          className="h-full"
           key={index}
           style={{
             opacity: visibleItems.has(index) ? 1 : 0,
