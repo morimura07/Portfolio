@@ -104,7 +104,7 @@ Sent from David Taylor's Portfolio Contact Form
           throw new Error("Failed to send email via Resend");
         }
 
-        console.log("Email sent successfully via Resend:", data);
+        // Email sent successfully via Resend
 
         return NextResponse.json({
           success: true,
@@ -128,15 +128,8 @@ Sent from David Taylor's Portfolio Contact Form
       userAgent: request.headers.get("user-agent"),
     };
 
-    // Log to console (in production, you might want to log to a file or database)
-    console.log("📧 NEW CONTACT FORM SUBMISSION:");
-    console.log("═══════════════════════════════");
-    console.log(`📅 Date: ${new Date().toLocaleString()}`);
-    console.log(`👤 Name: ${messageDetails.name}`);
-    console.log(`📧 Email: ${messageDetails.from}`);
-    console.log(`📋 Subject: ${messageDetails.subject}`);
-    console.log(`💬 Message: ${messageDetails.message}`);
-    console.log("═══════════════════════════════");
+    // Log contact form submission (in production, consider logging to a file or database)
+    // Contact form submission received and processed
 
     // You could also save to a JSON file or database here
     // For now, the console log will be visible in your terminal

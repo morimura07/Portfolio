@@ -31,11 +31,16 @@ export default function FloatingParticles({
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number>();
   const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
+
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -60,7 +65,13 @@ export default function FloatingParticles({
 
     // Initialize particles
     const initParticles = () => {
-      const particleCount = isMobile ? Math.min(count, 20) : count;
+      // Respect reduced motion preference
+      if (prefersReducedMotion) {
+        particlesRef.current = [];
+        return;
+      }
+      
+      const particleCount = isMobile ? Math.min(count, 15) : count;
       particlesRef.current = Array.from({ length: particleCount }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -133,7 +144,7 @@ export default function FloatingParticles({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [count, colors, speed, size, isMobile]);
+  }, [count, colors, speed, size, isMobile, prefersReducedMotion]);
 
   return (
     <canvas
