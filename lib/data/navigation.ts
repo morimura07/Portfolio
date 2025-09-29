@@ -23,7 +23,7 @@ export const NAV_ITEMS: NavItem[] = [
 // Social media links
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    href: "https://github.com/Enthusiastic001122",
+    href: "https://github.com/morimura07",
     icon: Github,
     label: "GitHub",
   },
@@ -33,7 +33,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: "Discord",
   },
   {
-    href: "https://t.me/GreenOsmi",
+    href: "https://t.me/SUMUNRA01",
     icon: TelegramIcon,
     label: "Telegram",
   },
