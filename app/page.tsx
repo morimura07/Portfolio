@@ -33,7 +33,7 @@ export default function HomePage() {
           <div className="mb-12">
             <FadeInAnimation delay={0}>
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
-                <TypingEffect text="David Taylor" speed={100} delay={0} />
+                <TypingEffect text="Morimura Din" speed={100} delay={0} />
               </h1>
             </FadeInAnimation>
 

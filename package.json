@@ -1,8 +1,8 @@
 {
-  "name": "david-taylor-portfolio",
+  "name": "morimura-din-portfolio",
   "version": "1.0.0",
-  "description": "Professional portfolio website for David Taylor - Full-Stack & Blockchain Developer",
-  "author": "David Taylor <david.taylor.dev@gmail.com>",
+  "description": "Professional portfolio website for Morimura Din - Full-Stack & Blockchain Developer",
+  "author": "Morimura Din <morimuradin@gmail.com>",
   "private": true,
   "scripts": {
     "build": "next build",

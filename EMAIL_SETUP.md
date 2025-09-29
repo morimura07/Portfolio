@@ -22,7 +22,7 @@ Replace `your_actual_api_key_here` with the API key from step 1.
 
 ### 3. Update Email Address (if needed)
 
-The current email address is set to: `luckydavid0812@gmail.com`
+The current email address is set to: `morimuradin@gmail.com`
 
 If you need to change it, update the email address in:
 
