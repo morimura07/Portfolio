@@ -15,11 +15,16 @@ export default function MagneticHover({
 }: MagneticHoverProps) {
   const elementRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
+
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -28,7 +33,7 @@ export default function MagneticHover({
   }, []);
 
   useEffect(() => {
-    if (isMobile) return; // Disable magnetic hover on mobile
+    if (isMobile || prefersReducedMotion) return; // Disable magnetic hover on mobile or when reduced motion is preferred
     const element = elementRef.current;
     if (!element) return;
 
@@ -54,7 +59,7 @@ export default function MagneticHover({
       element.removeEventListener("mousemove", handleMouseMove);
       element.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [strength, isMobile]);
+  }, [strength, isMobile, prefersReducedMotion]);
 
   return (
     <div
