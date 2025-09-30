@@ -17,7 +17,7 @@ export default function AboutPage() {
       <div className="py-32 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <SectionHeader
-            title="About David Taylor"
+            title="About Morimura Din"
             subtitle="Senior Full-Stack & Blockchain Developer with 7+ years of experience building enterprise-grade applications and decentralized systems that serve millions of users worldwide."
             description="Specialized in architecting scalable solutions, leading development teams, and delivering high-impact projects that drive business growth and technological innovation."
           />
