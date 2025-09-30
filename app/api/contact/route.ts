@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
     // Create email content
     const emailContent = {
-      to: "luckydavid0812@gmail.com", // Your email address
+      to: "morimuradin@gmail.com", // Your email address
       from: body.email,
       subject: `Portfolio Contact: ${body.subject}`,
       text: `
@@ -61,7 +61,7 @@ Message:
 ${body.message}
 
 ---
-Sent from David Taylor's Portfolio Contact Form
+Sent from Morimura Din's Portfolio Contact Form
       `,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -93,7 +93,7 @@ Sent from David Taylor's Portfolio Contact Form
       try {
         const { data, error } = await resend.emails.send({
           from: "Portfolio Contact <onboarding@resend.dev>", // Use your verified domain
-          to: ["luckydavid0812@gmail.com"],
+          to: ["morimuradin@gmail.com"],
           replyTo: body.email,
           subject: emailContent.subject,
           html: emailContent.html,
