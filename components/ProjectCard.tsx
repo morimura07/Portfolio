@@ -62,7 +62,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       </CardHeader>
 
       {/* Project Content */}
-      <CardContent className="flex-1 flex flex-col space-y-3 sm:space-y-4 px-4 py-4 sm:px-5 sm:py-5 w-full overflow-hidden">
+      <CardContent className="flex-1 flex flex-col space-y-3 sm:space-y-4 px-4 py-4 sm:px-5 sm:py-5 w-full overflow-hidden justify-between">
         <div className="space-y-3 sm:space-y-4">
           {/* Technologies */}
           <div>
