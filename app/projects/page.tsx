@@ -9,7 +9,9 @@ import FadeInAnimation from "@/components/FadeInAnimation";
 import StaggeredAnimation from "@/components/StaggeredAnimation";
 import ModernReveal from "@/components/ModernReveal";
 import MagneticHover from "@/components/MagneticHover";
-import FloatingParticles from "@/components/FloatingParticles";
+import { FloatingParticlesWrapper } from "@/components/LazyComponents";
+import LazySection from "@/components/LazySection";
+import { SkeletonGrid } from "@/components/SkeletonLoader";
 import { PROJECTS, PROJECT_CATEGORIES } from "@/lib/constants";
 import {
   filterProjectsByCategory,
@@ -25,7 +27,7 @@ export default function ProjectsPage() {
 
   return (
     <PageLayout>
-      <FloatingParticles
+      <FloatingParticlesWrapper
         count={35}
         colors={["#3b82f6", "#8b5cf6", "#10b981"]}
         speed={0.3}
@@ -114,23 +116,32 @@ export default function ProjectsPage() {
           </FadeInAnimation>
 
           {/* Projects Grid */}
-          <FadeInAnimation delay={0}>
-            <StaggeredAnimation
-              staggerDelay={50}
-              initialDelay={0}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full items-stretch"
-            >
-              {filteredProjects.map((project, index) => (
-                <MagneticHover
-                  key={`${project.title}-${index}`}
-                  strength={0.03}
-                  className="h-full"
-                >
-                  <ProjectCard project={project} index={index} />
-                </MagneticHover>
-              ))}
-            </StaggeredAnimation>
-          </FadeInAnimation>
+          <LazySection
+            className="w-full"
+            threshold={0.1}
+            rootMargin="100px"
+            fallback={
+              <SkeletonGrid items={6} className="w-full items-stretch" />
+            }
+          >
+            <FadeInAnimation delay={0}>
+              <StaggeredAnimation
+                staggerDelay={50}
+                initialDelay={0}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full items-stretch"
+              >
+                {filteredProjects.map((project, index) => (
+                  <MagneticHover
+                    key={`${project.title}-${index}`}
+                    strength={0.03}
+                    className="h-full"
+                  >
+                    <ProjectCard project={project} index={index} />
+                  </MagneticHover>
+                ))}
+              </StaggeredAnimation>
+            </FadeInAnimation>
+          </LazySection>
 
           {/* No results message */}
           {filteredProjects.length === 0 && (

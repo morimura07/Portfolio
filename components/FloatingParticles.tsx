@@ -32,6 +32,8 @@ export default function FloatingParticles({
   const animationRef = useRef<number>();
   const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -45,12 +47,41 @@ export default function FloatingParticles({
     checkMobile();
     window.addEventListener("resize", checkMobile);
 
-    return () => window.removeEventListener("resize", checkMobile);
+    // Lazy load particles after a short delay
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      clearTimeout(timer);
+    };
   }, []);
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "100px" }
+    );
+
+    if (canvasRef.current) {
+      observer.observe(canvasRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isLoaded]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !isVisible) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -70,7 +101,7 @@ export default function FloatingParticles({
         particlesRef.current = [];
         return;
       }
-      
+
       const particleCount = isMobile ? Math.min(count, 15) : count;
       particlesRef.current = Array.from({ length: particleCount }, () => ({
         x: Math.random() * canvas.width,
@@ -144,13 +175,16 @@ export default function FloatingParticles({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [count, colors, speed, size, isMobile, prefersReducedMotion]);
+  }, [count, colors, speed, size, isMobile, prefersReducedMotion, isVisible]);
 
   return (
     <canvas
       ref={canvasRef}
       className={`fixed inset-0 pointer-events-none z-0 ${className}`}
-      style={{ opacity: 0.3 }}
+      style={{
+        opacity: isVisible ? 0.3 : 0,
+        transition: "opacity 0.5s ease-in-out",
+      }}
     />
   );
 }
