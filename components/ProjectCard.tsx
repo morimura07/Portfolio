@@ -5,13 +5,14 @@ import { ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/types";
 import { getProjectCardDelay } from "@/lib/portfolio-utils";
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 interface ProjectCardProps {
   project: Project;
   index: number;
 }
 
-// Lazy Image Component with Intersection Observer
+// Lazy Image Component with Intersection Observer and Next.js Image
 function LazyImage({
   src,
   alt,
@@ -23,7 +24,7 @@ function LazyImage({
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -53,18 +54,23 @@ function LazyImage({
       ) : (
         <>
           {!isLoaded && (
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse flex items-center justify-center z-10">
               <div className="w-12 h-12 bg-gray-700 rounded-lg animate-pulse"></div>
             </div>
           )}
-          <img
+          <Image
             src={src}
             alt={alt}
+            fill
             className={`${className} transition-opacity duration-300 ${
               isLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setIsLoaded(true)}
-            loading="lazy"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            quality={85}
+            priority={false}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
           />
         </>
       )}
