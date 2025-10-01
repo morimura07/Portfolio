@@ -11,7 +11,7 @@ import StaggeredAnimation from "@/components/StaggeredAnimation";
 import ModernReveal from "@/components/ModernReveal";
 import MagneticHover from "@/components/MagneticHover";
 import MorphingText from "@/components/MorphingText";
-import FloatingParticles from "@/components/FloatingParticles";
+import { FloatingParticlesWrapper } from "@/components/LazyComponents";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -26,7 +26,7 @@ import { CORE_SKILLS } from "@/lib/constants";
 export default function HomePage() {
   return (
     <PageLayout>
-      <FloatingParticles count={60} />
+      <FloatingParticlesWrapper count={60} />
       <div className="flex flex-col items-center justify-center min-h-screen text-white px-4 sm:px-8 py-32 relative z-10">
         <div className="text-center max-w-6xl">
           {/* Main Hero Section */}

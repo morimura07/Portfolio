@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
-import Waves from "./Waves";
+import { WavesWrapper } from "./LazyComponents";
 import Navigation from "./Navigation";
 
 interface PageLayoutProps {
@@ -21,7 +21,7 @@ export default function PageLayout({ children }: PageLayoutProps) {
     <div className="relative min-h-screen overflow-x-hidden">
       {/* Fixed background waves */}
       <div className="fixed inset-0 z-0">
-        <Waves
+        <WavesWrapper
           lineColor="rgba(255, 255, 255, 0.3)"
           backgroundColor="#0f172a"
           waveSpeedX={0.0125}

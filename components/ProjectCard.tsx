@@ -4,10 +4,72 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/types";
 import { getProjectCardDelay } from "@/lib/portfolio-utils";
+import { useState, useRef, useEffect } from "react";
 
 interface ProjectCardProps {
   project: Project;
   index: number;
+}
+
+// Lazy Image Component with Intersection Observer
+function LazyImage({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={imgRef} className="relative w-full h-full">
+      {!isInView ? (
+        // Skeleton placeholder
+        <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse flex items-center justify-center">
+          <div className="w-12 h-12 bg-gray-700 rounded-lg animate-pulse"></div>
+        </div>
+      ) : (
+        <>
+          {!isLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse flex items-center justify-center">
+              <div className="w-12 h-12 bg-gray-700 rounded-lg animate-pulse"></div>
+            </div>
+          )}
+          <img
+            src={src}
+            alt={alt}
+            className={`${className} transition-opacity duration-300 ${
+              isLoaded ? "opacity-100" : "opacity-0"
+            }`}
+            onLoad={() => setIsLoaded(true)}
+            loading="lazy"
+          />
+        </>
+      )}
+    </div>
+  );
 }
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
@@ -20,7 +82,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     >
       {/* Project Image */}
       <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 relative overflow-hidden">
-        <img
+        <LazyImage
           src={project.image || "/placeholder.svg"}
           alt={project.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

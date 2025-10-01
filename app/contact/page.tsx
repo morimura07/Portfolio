@@ -3,8 +3,10 @@
 import PageLayout from "@/components/PageLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SectionHeader from "@/components/SectionHeader";
-import HowIWorkFlow from "@/components/HowIWorkFlow";
-import ContactForm from "@/components/ContactForm";
+import {
+  HowIWorkFlowWrapper,
+  ContactFormWrapper,
+} from "@/components/LazyComponents";
 import FadeInAnimation from "@/components/FadeInAnimation";
 import StaggeredAnimation from "@/components/StaggeredAnimation";
 import { SOCIAL_LINKS } from "@/lib/constants";
@@ -24,7 +26,7 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
               {/* Contact Form */}
               <FadeInAnimation delay={50}>
-                <ContactForm />
+                <ContactFormWrapper />
               </FadeInAnimation>
 
               {/* Social Links Only */}
@@ -93,7 +95,7 @@ export default function ContactPage() {
           {/* How I Work Section */}
           <FadeInAnimation delay={150}>
             <div className="mt-24">
-              <HowIWorkFlow />
+              <HowIWorkFlowWrapper />
             </div>
           </FadeInAnimation>
         </div>
